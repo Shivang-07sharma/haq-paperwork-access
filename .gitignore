@@ -1,0 +1,44 @@
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.ruff_cache/
+.pytest_cache/
+.mypy_cache/
+
+# ---- Local data ----
+# The database and uploaded originals hold personal documents. Both are
+# recreated on startup, so neither belongs in version control.
+backend/fed.db
+backend/fed.db-journal
+backend/storage/
+
+# ---- Node and Next.js ----
+node_modules/
+.next/
+out/
+build/
+.npm
+*.tsbuildinfo
+next-env.d.ts
+
+# ---- Environment ----
+# .env.example is committed; the real file is not.
+.env
+.env.local
+.env*.local
+
+# ---- Editor, OS and agent tooling ----
+.claude/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ---- Logs ----
+*.log
+npm-debug.log*
+yarn-error.log*

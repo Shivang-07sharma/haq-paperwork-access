@@ -1,0 +1,595 @@
+{
+  "_meta": {
+    "note": "Eligibility criteria here are simplified for triage, not adjudication. They reflect the headline central-government rules and deliberately omit state-level variations, SECC deprivation codes and annual revisions. Always confirm against the official portal before telling somebody they do or do not qualify.",
+    "last_reviewed": "2026-08-21",
+    "currency": "INR"
+  },
+  "schemes": [
+    {
+      "id": "pm_kisan",
+      "name": { "en": "PM-KISAN", "hi": "पीएम-किसान" },
+      "full_name": {
+        "en": "Pradhan Mantri Kisan Samman Nidhi",
+        "hi": "प्रधानमंत्री किसान सम्मान निधि"
+      },
+      "department": {
+        "en": "Ministry of Agriculture and Farmers Welfare",
+        "hi": "कृषि एवं किसान कल्याण मंत्रालय"
+      },
+      "category": "income_support",
+      "icon": "sprout",
+      "benefit": {
+        "en": "Rs 6,000 every year, paid straight into your bank account in three instalments of Rs 2,000.",
+        "hi": "हर साल 6,000 रुपये, 2,000 रुपये की तीन किस्तों में सीधे आपके बैंक खाते में।"
+      },
+      "benefit_amount_inr": 6000,
+      "benefit_period": "year",
+      "rules": {
+        "all": [
+          { "field": "land_holding_acres", "op": ">", "value": 0, "key": "rule.has_land" },
+          { "field": "age", "op": ">=", "value": 18, "key": "rule.age_min", "args": { "n": 18 } },
+          { "field": "has_bank_account", "op": "is_true", "key": "rule.has_bank_account" }
+        ]
+      },
+      "exclusions": {
+        "any": [
+          { "field": "is_income_tax_payer", "op": "is_true", "key": "excl.income_tax_payer" },
+          { "field": "is_govt_employee", "op": "is_true", "key": "excl.govt_employee" }
+        ]
+      },
+      "required_documents": ["aadhaar", "land_record", "bank_passbook"],
+      "apply_url": "https://pmkisan.gov.in",
+      "apply_offline": {
+        "en": "Your village revenue officer (Patwari or Lekhpal), or any Common Service Centre.",
+        "hi": "अपने गाँव के पटवारी या लेखपाल के पास, या किसी भी कॉमन सर्विस सेंटर पर।"
+      },
+      "processing_days": 30,
+      "form_id": "pm_kisan_form"
+    },
+    {
+      "id": "pmjay",
+      "name": { "en": "Ayushman Bharat PM-JAY", "hi": "आयुष्मान भारत पीएम-जय" },
+      "full_name": {
+        "en": "Pradhan Mantri Jan Arogya Yojana",
+        "hi": "प्रधानमंत्री जन आरोग्य योजना"
+      },
+      "department": {
+        "en": "National Health Authority",
+        "hi": "राष्ट्रीय स्वास्थ्य प्राधिकरण"
+      },
+      "category": "health",
+      "icon": "heart-pulse",
+      "benefit": {
+        "en": "Up to Rs 5 lakh of free hospital treatment for your whole family, every year, at any empanelled hospital.",
+        "hi": "हर साल आपके पूरे परिवार के लिए किसी भी सूचीबद्ध अस्पताल में 5 लाख रुपये तक का मुफ्त इलाज।"
+      },
+      "benefit_amount_inr": 500000,
+      "benefit_period": "year",
+      "rules": {
+        "any": [
+          { "field": "is_bpl", "op": "is_true", "key": "rule.is_bpl" },
+          { "field": "annual_income", "op": "<=", "value": 120000, "key": "rule.income_max", "args": { "amount": 120000 } }
+        ]
+      },
+      "exclusions": { "any": [] },
+      "required_documents": ["aadhaar", "ration_card"],
+      "apply_url": "https://pmjay.gov.in",
+      "apply_offline": {
+        "en": "Any empanelled hospital help desk, or a Common Service Centre. Ask for the Ayushman Mitra.",
+        "hi": "किसी भी सूचीबद्ध अस्पताल के हेल्प डेस्क या कॉमन सर्विस सेंटर पर। आयुष्मान मित्र से मिलें।"
+      },
+      "processing_days": 15,
+      "form_id": "pmjay_form"
+    },
+    {
+      "id": "pmay_g",
+      "name": { "en": "PM Awaas Yojana (Gramin)", "hi": "प्रधानमंत्री आवास योजना (ग्रामीण)" },
+      "full_name": {
+        "en": "Pradhan Mantri Awaas Yojana - Gramin",
+        "hi": "प्रधानमंत्री आवास योजना - ग्रामीण"
+      },
+      "department": {
+        "en": "Ministry of Rural Development",
+        "hi": "ग्रामीण विकास मंत्रालय"
+      },
+      "category": "housing",
+      "icon": "home",
+      "benefit": {
+        "en": "Rs 1.20 lakh (Rs 1.30 lakh in hill and difficult areas) to build a pucca house, plus help with a toilet and a job card.",
+        "hi": "पक्का घर बनाने के लिए 1.20 लाख रुपये (पहाड़ी और कठिन क्षेत्रों में 1.30 लाख), साथ में शौचालय और जॉब कार्ड की सहायता।"
+      },
+      "benefit_amount_inr": 120000,
+      "benefit_period": "one_time",
+      "rules": {
+        "all": [
+          { "field": "area_type", "op": "==", "value": "rural", "key": "rule.is_rural" },
+          { "field": "house_type", "op": "in", "value": ["kutcha", "none"], "key": "rule.house_kutcha" },
+          { "field": "is_bpl", "op": "is_true", "key": "rule.is_bpl" }
+        ]
+      },
+      "exclusions": {
+        "any": [
+          { "field": "is_income_tax_payer", "op": "is_true", "key": "excl.income_tax_payer" },
+          { "field": "is_govt_employee", "op": "is_true", "key": "excl.govt_employee" }
+        ]
+      },
+      "required_documents": ["aadhaar", "ration_card", "bank_passbook", "job_card"],
+      "apply_url": "https://pmayg.nic.in",
+      "apply_offline": {
+        "en": "Your Gram Panchayat office. The Awaas Sahayak records applications on the Awaas app.",
+        "hi": "अपने ग्राम पंचायत कार्यालय में। आवास सहायक आवास ऐप पर आवेदन दर्ज करते हैं।"
+      },
+      "processing_days": 90,
+      "form_id": "pmay_g_form"
+    },
+    {
+      "id": "ujjwala",
+      "name": { "en": "PM Ujjwala Yojana 2.0", "hi": "प्रधानमंत्री उज्ज्वला योजना 2.0" },
+      "full_name": {
+        "en": "Pradhan Mantri Ujjwala Yojana",
+        "hi": "प्रधानमंत्री उज्ज्वला योजना"
+      },
+      "department": {
+        "en": "Ministry of Petroleum and Natural Gas",
+        "hi": "पेट्रोलियम और प्राकृतिक गैस मंत्रालय"
+      },
+      "category": "energy",
+      "icon": "flame",
+      "benefit": {
+        "en": "A free LPG gas connection in your name, with the first refill and the stove provided free.",
+        "hi": "आपके नाम पर मुफ्त एलपीजी गैस कनेक्शन, पहली रिफिल और चूल्हा भी मुफ्त।"
+      },
+      "benefit_amount_inr": 3200,
+      "benefit_period": "one_time",
+      "rules": {
+        "all": [
+          { "field": "gender", "op": "==", "value": "female", "key": "rule.is_female" },
+          { "field": "age", "op": ">=", "value": 18, "key": "rule.age_min", "args": { "n": 18 } },
+          { "field": "has_lpg_connection", "op": "is_false", "key": "rule.no_lpg" },
+          { "field": "is_bpl", "op": "is_true", "key": "rule.is_bpl" }
+        ]
+      },
+      "exclusions": { "any": [] },
+      "required_documents": ["aadhaar", "ration_card", "bank_passbook"],
+      "apply_url": "https://pmuy.gov.in",
+      "apply_offline": {
+        "en": "Any LPG distributor (Indane, HP Gas or Bharatgas). Take your ration card and Aadhaar.",
+        "hi": "किसी भी एलपीजी वितरक (इंडेन, एचपी गैस या भारतगैस) के पास। राशन कार्ड और आधार साथ ले जाएँ।"
+      },
+      "processing_days": 21,
+      "form_id": "ujjwala_form"
+    },
+    {
+      "id": "ignoaps",
+      "name": { "en": "Old Age Pension (IGNOAPS)", "hi": "वृद्धावस्था पेंशन (IGNOAPS)" },
+      "full_name": {
+        "en": "Indira Gandhi National Old Age Pension Scheme",
+        "hi": "इंदिरा गांधी राष्ट्रीय वृद्धावस्था पेंशन योजना"
+      },
+      "department": {
+        "en": "Ministry of Rural Development (NSAP)",
+        "hi": "ग्रामीण विकास मंत्रालय (एनएसएपी)"
+      },
+      "category": "pension",
+      "icon": "hand-coins",
+      "benefit": {
+        "en": "A monthly pension paid into your bank account for life. Rs 200 a month up to age 79 and Rs 500 a month from 80, with most states adding a top-up.",
+        "hi": "जीवन भर हर महीने आपके बैंक खाते में पेंशन। 79 वर्ष तक 200 रुपये मासिक और 80 वर्ष से 500 रुपये मासिक, अधिकांश राज्य इसमें अतिरिक्त राशि जोड़ते हैं।"
+      },
+      "benefit_amount_inr": 200,
+      "benefit_period": "month",
+      "rules": {
+        "all": [
+          { "field": "age", "op": ">=", "value": 60, "key": "rule.age_min", "args": { "n": 60 } },
+          { "field": "is_bpl", "op": "is_true", "key": "rule.is_bpl" }
+        ]
+      },
+      "exclusions": { "any": [] },
+      "required_documents": ["aadhaar", "ration_card", "bank_passbook", "birth_certificate"],
+      "apply_url": "https://nsap.nic.in",
+      "apply_offline": {
+        "en": "Gram Panchayat or the Block Development Office. In cities, the municipal ward office.",
+        "hi": "ग्राम पंचायत या खंड विकास कार्यालय। शहरों में नगरपालिका वार्ड कार्यालय।"
+      },
+      "processing_days": 45,
+      "form_id": "nsap_form"
+    },
+    {
+      "id": "ignwps",
+      "name": { "en": "Widow Pension (IGNWPS)", "hi": "विधवा पेंशन (IGNWPS)" },
+      "full_name": {
+        "en": "Indira Gandhi National Widow Pension Scheme",
+        "hi": "इंदिरा गांधी राष्ट्रीय विधवा पेंशन योजना"
+      },
+      "department": {
+        "en": "Ministry of Rural Development (NSAP)",
+        "hi": "ग्रामीण विकास मंत्रालय (एनएसएपी)"
+      },
+      "category": "pension",
+      "icon": "hand-coins",
+      "benefit": {
+        "en": "Rs 300 a month until you turn 80, after which it becomes Rs 500 a month. Most states add their own top-up.",
+        "hi": "80 वर्ष की आयु तक 300 रुपये मासिक, उसके बाद 500 रुपये मासिक। अधिकांश राज्य अपनी ओर से अतिरिक्त राशि देते हैं।"
+      },
+      "benefit_amount_inr": 300,
+      "benefit_period": "month",
+      "rules": {
+        "all": [
+          { "field": "gender", "op": "==", "value": "female", "key": "rule.is_female" },
+          { "field": "age", "op": ">=", "value": 40, "key": "rule.age_min", "args": { "n": 40 } },
+          { "field": "marital_status", "op": "==", "value": "widowed", "key": "rule.widowed" },
+          { "field": "is_bpl", "op": "is_true", "key": "rule.is_bpl" }
+        ]
+      },
+      "exclusions": { "any": [] },
+      "required_documents": ["aadhaar", "ration_card", "bank_passbook"],
+      "apply_url": "https://nsap.nic.in",
+      "apply_offline": {
+        "en": "Gram Panchayat or Block Development Office. You will be asked for a death certificate for your husband.",
+        "hi": "ग्राम पंचायत या खंड विकास कार्यालय। पति का मृत्यु प्रमाण पत्र माँगा जाएगा।"
+      },
+      "processing_days": 45,
+      "form_id": "nsap_form"
+    },
+    {
+      "id": "igndps",
+      "name": { "en": "Disability Pension (IGNDPS)", "hi": "दिव्यांग पेंशन (IGNDPS)" },
+      "full_name": {
+        "en": "Indira Gandhi National Disability Pension Scheme",
+        "hi": "इंदिरा गांधी राष्ट्रीय दिव्यांगता पेंशन योजना"
+      },
+      "department": {
+        "en": "Ministry of Rural Development (NSAP)",
+        "hi": "ग्रामीण विकास मंत्रालय (एनएसएपी)"
+      },
+      "category": "pension",
+      "icon": "accessibility",
+      "benefit": {
+        "en": "Rs 300 a month, rising to Rs 500 a month from age 80, paid into your bank account.",
+        "hi": "300 रुपये मासिक, 80 वर्ष की आयु से 500 रुपये मासिक, सीधे आपके बैंक खाते में।"
+      },
+      "benefit_amount_inr": 300,
+      "benefit_period": "month",
+      "rules": {
+        "all": [
+          { "field": "age", "op": ">=", "value": 18, "key": "rule.age_min", "args": { "n": 18 } },
+          { "field": "disability_percent", "op": ">=", "value": 80, "key": "rule.disability_min", "args": { "n": 80 } },
+          { "field": "is_bpl", "op": "is_true", "key": "rule.is_bpl" }
+        ]
+      },
+      "exclusions": { "any": [] },
+      "required_documents": ["aadhaar", "disability_certificate", "ration_card", "bank_passbook"],
+      "apply_url": "https://nsap.nic.in",
+      "apply_offline": {
+        "en": "Gram Panchayat or Block Development Office. Carry your UDID or disability certificate.",
+        "hi": "ग्राम पंचायत या खंड विकास कार्यालय। अपना यूडीआईडी या दिव्यांगता प्रमाण पत्र साथ लाएँ।"
+      },
+      "processing_days": 45,
+      "form_id": "nsap_form"
+    },
+    {
+      "id": "mgnrega",
+      "name": { "en": "MGNREGA Job Card", "hi": "मनरेगा जॉब कार्ड" },
+      "full_name": {
+        "en": "Mahatma Gandhi National Rural Employment Guarantee Act",
+        "hi": "महात्मा गांधी राष्ट्रीय ग्रामीण रोजगार गारंटी अधिनियम"
+      },
+      "department": {
+        "en": "Ministry of Rural Development",
+        "hi": "ग्रामीण विकास मंत्रालय"
+      },
+      "category": "employment",
+      "icon": "hard-hat",
+      "benefit": {
+        "en": "A legal guarantee of 100 days of paid work a year for your household, at the state wage rate. If no work is given within 15 days you are owed an unemployment allowance.",
+        "hi": "आपके परिवार के लिए साल में 100 दिन के भुगतान वाले काम की कानूनी गारंटी, राज्य मजदूरी दर पर। यदि 15 दिन में काम न मिले तो बेरोजगारी भत्ता मिलना चाहिए।"
+      },
+      "benefit_amount_inr": 0,
+      "benefit_period": "year",
+      "rules": {
+        "all": [
+          { "field": "area_type", "op": "==", "value": "rural", "key": "rule.is_rural" },
+          { "field": "age", "op": ">=", "value": 18, "key": "rule.age_min", "args": { "n": 18 } }
+        ]
+      },
+      "exclusions": { "any": [] },
+      "required_documents": ["aadhaar", "ration_card", "bank_passbook"],
+      "apply_url": "https://nrega.nic.in",
+      "apply_offline": {
+        "en": "Ask your Gram Panchayat for Form 1. They must issue the job card within 15 days, free of cost.",
+        "hi": "अपनी ग्राम पंचायत से फॉर्म 1 माँगें। उन्हें 15 दिन के भीतर निःशुल्क जॉब कार्ड देना अनिवार्य है।"
+      },
+      "processing_days": 15,
+      "form_id": "mgnrega_form"
+    },
+    {
+      "id": "pmmvy",
+      "name": { "en": "PM Matru Vandana Yojana", "hi": "प्रधानमंत्री मातृ वंदना योजना" },
+      "full_name": {
+        "en": "Pradhan Mantri Matru Vandana Yojana",
+        "hi": "प्रधानमंत्री मातृ वंदना योजना"
+      },
+      "department": {
+        "en": "Ministry of Women and Child Development",
+        "hi": "महिला एवं बाल विकास मंत्रालय"
+      },
+      "category": "women_child",
+      "icon": "baby",
+      "benefit": {
+        "en": "Rs 5,000 for your first child, paid in instalments. For a second child, Rs 6,000 is paid if the child is a girl.",
+        "hi": "पहले बच्चे के लिए 5,000 रुपये, किस्तों में। दूसरे बच्चे के लिए, यदि बच्ची है तो 6,000 रुपये।"
+      },
+      "benefit_amount_inr": 5000,
+      "benefit_period": "one_time",
+      "rules": {
+        "all": [
+          { "field": "gender", "op": "==", "value": "female", "key": "rule.is_female" },
+          { "field": "age", "op": ">=", "value": 19, "key": "rule.age_min", "args": { "n": 19 } },
+          { "field": "is_pregnant_or_lactating", "op": "is_true", "key": "rule.pregnant_or_lactating" }
+        ]
+      },
+      "exclusions": {
+        "any": [
+          { "field": "is_govt_employee", "op": "is_true", "key": "excl.govt_employee_paid_leave" }
+        ]
+      },
+      "required_documents": ["aadhaar", "bank_passbook"],
+      "apply_url": "https://pmmvy.wcd.gov.in",
+      "apply_offline": {
+        "en": "Your Anganwadi centre or the ASHA worker in your village.",
+        "hi": "अपने आंगनवाड़ी केंद्र या गाँव की आशा कार्यकर्ता के पास।"
+      },
+      "processing_days": 30,
+      "form_id": "pmmvy_form"
+    },
+    {
+      "id": "post_matric_scholarship",
+      "name": { "en": "Post-Matric Scholarship", "hi": "पोस्ट-मैट्रिक छात्रवृत्ति" },
+      "full_name": {
+        "en": "Post-Matric Scholarship for SC, ST and OBC students",
+        "hi": "अनुसूचित जाति, जनजाति और अन्य पिछड़ा वर्ग के छात्रों के लिए पोस्ट-मैट्रिक छात्रवृत्ति"
+      },
+      "department": {
+        "en": "Ministry of Social Justice and Empowerment",
+        "hi": "सामाजिक न्याय और अधिकारिता मंत्रालय"
+      },
+      "category": "education",
+      "icon": "graduation-cap",
+      "benefit": {
+        "en": "Your course fees are paid and you get a monthly maintenance allowance while you study after Class 10.",
+        "hi": "कक्षा 10 के बाद पढ़ाई के दौरान आपकी कोर्स फीस दी जाती है और मासिक निर्वाह भत्ता मिलता है।"
+      },
+      "benefit_amount_inr": 0,
+      "benefit_period": "year",
+      "rules": {
+        "all": [
+          { "field": "social_category", "op": "in", "value": ["SC", "ST", "OBC"], "key": "rule.category_in", "args": { "list": "SC, ST, OBC" } },
+          { "field": "annual_income", "op": "<=", "value": 250000, "key": "rule.income_max", "args": { "amount": 250000 } },
+          { "field": "education_level", "op": "in", "value": ["class_11_12", "graduate", "post_graduate"], "key": "rule.studying_after_class_10" }
+        ]
+      },
+      "exclusions": { "any": [] },
+      "required_documents": ["aadhaar", "caste_certificate", "income_certificate", "bank_passbook"],
+      "apply_url": "https://scholarships.gov.in",
+      "apply_offline": {
+        "en": "Your college scholarship desk. Applications go through the National Scholarship Portal.",
+        "hi": "अपने कॉलेज के छात्रवृत्ति डेस्क पर। आवेदन राष्ट्रीय छात्रवृत्ति पोर्टल से होते हैं।"
+      },
+      "processing_days": 60,
+      "form_id": "scholarship_form"
+    },
+    {
+      "id": "apy",
+      "name": { "en": "Atal Pension Yojana", "hi": "अटल पेंशन योजना" },
+      "full_name": { "en": "Atal Pension Yojana", "hi": "अटल पेंशन योजना" },
+      "department": { "en": "Ministry of Finance (PFRDA)", "hi": "वित्त मंत्रालय (पीएफआरडीए)" },
+      "category": "pension",
+      "icon": "piggy-bank",
+      "benefit": {
+        "en": "Choose a guaranteed pension of Rs 1,000 to Rs 5,000 a month from age 60. You pay a small amount every month until then.",
+        "hi": "60 वर्ष की आयु से 1,000 से 5,000 रुपये मासिक की गारंटीड पेंशन चुनें। तब तक हर महीने थोड़ी राशि जमा करनी होती है।"
+      },
+      "benefit_amount_inr": 1000,
+      "benefit_period": "month",
+      "rules": {
+        "all": [
+          { "field": "age", "op": ">=", "value": 18, "key": "rule.age_min", "args": { "n": 18 } },
+          { "field": "age", "op": "<=", "value": 40, "key": "rule.age_max", "args": { "n": 40 } },
+          { "field": "has_bank_account", "op": "is_true", "key": "rule.has_bank_account" }
+        ]
+      },
+      "exclusions": {
+        "any": [
+          { "field": "is_income_tax_payer", "op": "is_true", "key": "excl.income_tax_payer" }
+        ]
+      },
+      "required_documents": ["aadhaar", "bank_passbook"],
+      "apply_url": "https://npscra.nsdl.co.in",
+      "apply_offline": {
+        "en": "The bank branch or post office where you hold your savings account.",
+        "hi": "जिस बैंक शाखा या डाकघर में आपका बचत खाता है, वहाँ।"
+      },
+      "processing_days": 7,
+      "form_id": "apy_form"
+    },
+    {
+      "id": "pmsby",
+      "name": { "en": "PM Suraksha Bima Yojana", "hi": "प्रधानमंत्री सुरक्षा बीमा योजना" },
+      "full_name": {
+        "en": "Pradhan Mantri Suraksha Bima Yojana",
+        "hi": "प्रधानमंत्री सुरक्षा बीमा योजना"
+      },
+      "department": { "en": "Ministry of Finance", "hi": "वित्त मंत्रालय" },
+      "category": "insurance",
+      "icon": "shield",
+      "benefit": {
+        "en": "Rs 2 lakh accident cover for a premium of Rs 20 a year, taken automatically from your bank account.",
+        "hi": "20 रुपये सालाना प्रीमियम पर 2 लाख रुपये का दुर्घटना बीमा, राशि आपके बैंक खाते से अपने आप कट जाती है।"
+      },
+      "benefit_amount_inr": 200000,
+      "benefit_period": "year",
+      "rules": {
+        "all": [
+          { "field": "age", "op": ">=", "value": 18, "key": "rule.age_min", "args": { "n": 18 } },
+          { "field": "age", "op": "<=", "value": 70, "key": "rule.age_max", "args": { "n": 70 } },
+          { "field": "has_bank_account", "op": "is_true", "key": "rule.has_bank_account" }
+        ]
+      },
+      "exclusions": { "any": [] },
+      "required_documents": ["aadhaar", "bank_passbook"],
+      "apply_url": "https://jansuraksha.gov.in",
+      "apply_offline": {
+        "en": "Your bank branch. One consent form is enough and it renews every year.",
+        "hi": "अपनी बैंक शाखा में। एक सहमति फॉर्म पर्याप्त है और यह हर साल अपने आप नवीनीकृत होता है।"
+      },
+      "processing_days": 7,
+      "form_id": "jansuraksha_form"
+    },
+    {
+      "id": "pmjjby",
+      "name": { "en": "PM Jeevan Jyoti Bima Yojana", "hi": "प्रधानमंत्री जीवन ज्योति बीमा योजना" },
+      "full_name": {
+        "en": "Pradhan Mantri Jeevan Jyoti Bima Yojana",
+        "hi": "प्रधानमंत्री जीवन ज्योति बीमा योजना"
+      },
+      "department": { "en": "Ministry of Finance", "hi": "वित्त मंत्रालय" },
+      "category": "insurance",
+      "icon": "shield-check",
+      "benefit": {
+        "en": "Rs 2 lakh life cover for your family for a premium of Rs 436 a year.",
+        "hi": "436 रुपये सालाना प्रीमियम पर आपके परिवार के लिए 2 लाख रुपये का जीवन बीमा।"
+      },
+      "benefit_amount_inr": 200000,
+      "benefit_period": "year",
+      "rules": {
+        "all": [
+          { "field": "age", "op": ">=", "value": 18, "key": "rule.age_min", "args": { "n": 18 } },
+          { "field": "age", "op": "<=", "value": 50, "key": "rule.age_max", "args": { "n": 50 } },
+          { "field": "has_bank_account", "op": "is_true", "key": "rule.has_bank_account" }
+        ]
+      },
+      "exclusions": { "any": [] },
+      "required_documents": ["aadhaar", "bank_passbook"],
+      "apply_url": "https://jansuraksha.gov.in",
+      "apply_offline": {
+        "en": "Your bank branch. Ask for the PMJJBY consent-cum-declaration form.",
+        "hi": "अपनी बैंक शाखा में। पीएमजेजेबीवाई सहमति फॉर्म माँगें।"
+      },
+      "processing_days": 7,
+      "form_id": "jansuraksha_form"
+    },
+    {
+      "id": "nfsa_ration",
+      "name": { "en": "Subsidised Ration (NFSA)", "hi": "सब्सिडी वाला राशन (एनएफएसए)" },
+      "full_name": {
+        "en": "National Food Security Act priority ration card",
+        "hi": "राष्ट्रीय खाद्य सुरक्षा अधिनियम प्राथमिकता राशन कार्ड"
+      },
+      "department": {
+        "en": "Department of Food and Public Distribution",
+        "hi": "खाद्य एवं सार्वजनिक वितरण विभाग"
+      },
+      "category": "food",
+      "icon": "wheat",
+      "benefit": {
+        "en": "5 kg of grain per person per month at Rs 1 to Rs 3 a kg. An Antyodaya card gets 35 kg for the whole household.",
+        "hi": "प्रति व्यक्ति हर महीने 5 किलो अनाज, 1 से 3 रुपये प्रति किलो। अंत्योदय कार्ड पर पूरे परिवार को 35 किलो।"
+      },
+      "benefit_amount_inr": 0,
+      "benefit_period": "month",
+      "rules": {
+        "any": [
+          { "field": "is_bpl", "op": "is_true", "key": "rule.is_bpl" },
+          { "field": "annual_income", "op": "<=", "value": 120000, "key": "rule.income_max", "args": { "amount": 120000 } }
+        ]
+      },
+      "exclusions": {
+        "any": [
+          { "field": "is_income_tax_payer", "op": "is_true", "key": "excl.income_tax_payer" },
+          { "field": "is_govt_employee", "op": "is_true", "key": "excl.govt_employee" }
+        ]
+      },
+      "required_documents": ["aadhaar", "income_certificate"],
+      "apply_url": "https://nfsa.gov.in",
+      "apply_offline": {
+        "en": "The Circle or Taluk food office, or a Common Service Centre. Your local ration shop can tell you where.",
+        "hi": "सर्किल या तालुक खाद्य कार्यालय, या कॉमन सर्विस सेंटर। आपकी राशन दुकान पता बता सकती है।"
+      },
+      "processing_days": 30,
+      "form_id": "ration_form"
+    },
+    {
+      "id": "pm_vishwakarma",
+      "name": { "en": "PM Vishwakarma", "hi": "पीएम विश्वकर्मा" },
+      "full_name": { "en": "PM Vishwakarma Scheme", "hi": "पीएम विश्वकर्मा योजना" },
+      "department": {
+        "en": "Ministry of Micro, Small and Medium Enterprises",
+        "hi": "सूक्ष्म, लघु और मध्यम उद्यम मंत्रालय"
+      },
+      "category": "livelihood",
+      "icon": "hammer",
+      "benefit": {
+        "en": "A Rs 15,000 toolkit voucher, skills training with a daily stipend, and a collateral-free loan of up to Rs 3 lakh at 5 percent interest.",
+        "hi": "15,000 रुपये का टूलकिट वाउचर, दैनिक भत्ते के साथ कौशल प्रशिक्षण, और 5 प्रतिशत ब्याज पर 3 लाख रुपये तक का बिना गारंटी ऋण।"
+      },
+      "benefit_amount_inr": 15000,
+      "benefit_period": "one_time",
+      "rules": {
+        "all": [
+          { "field": "age", "op": ">=", "value": 18, "key": "rule.age_min", "args": { "n": 18 } },
+          {
+            "field": "occupation",
+            "op": "in",
+            "value": ["carpenter", "blacksmith", "goldsmith", "potter", "cobbler", "tailor", "mason", "barber", "washerman", "weaver", "basket_maker", "boat_maker", "sculptor"],
+            "key": "rule.traditional_artisan"
+          }
+        ]
+      },
+      "exclusions": {
+        "any": [
+          { "field": "is_govt_employee", "op": "is_true", "key": "excl.govt_employee" }
+        ]
+      },
+      "required_documents": ["aadhaar", "bank_passbook"],
+      "apply_url": "https://pmvishwakarma.gov.in",
+      "apply_offline": {
+        "en": "A Common Service Centre. Registration needs the mobile number linked to your Aadhaar for the biometric step.",
+        "hi": "कॉमन सर्विस सेंटर पर। पंजीकरण के लिए बायोमेट्रिक चरण हेतु आधार से जुड़ा मोबाइल नंबर चाहिए।"
+      },
+      "processing_days": 45,
+      "form_id": "vishwakarma_form"
+    },
+    {
+      "id": "jan_dhan",
+      "name": { "en": "Jan Dhan Bank Account", "hi": "जन धन बैंक खाता" },
+      "full_name": {
+        "en": "Pradhan Mantri Jan Dhan Yojana",
+        "hi": "प्रधानमंत्री जन धन योजना"
+      },
+      "department": { "en": "Ministry of Finance", "hi": "वित्त मंत्रालय" },
+      "category": "banking",
+      "icon": "landmark",
+      "benefit": {
+        "en": "A bank account with no minimum balance, a free RuPay debit card, Rs 2 lakh accident cover and an overdraft of up to Rs 10,000. Most other schemes pay into this account.",
+        "hi": "बिना न्यूनतम राशि वाला बैंक खाता, मुफ्त रुपे डेबिट कार्ड, 2 लाख रुपये दुर्घटना बीमा और 10,000 रुपये तक ओवरड्राफ्ट। अधिकांश योजनाओं का पैसा इसी खाते में आता है।"
+      },
+      "benefit_amount_inr": 0,
+      "benefit_period": "one_time",
+      "rules": {
+        "all": [
+          { "field": "age", "op": ">=", "value": 10, "key": "rule.age_min", "args": { "n": 10 } },
+          { "field": "has_bank_account", "op": "is_false", "key": "rule.no_bank_account" }
+        ]
+      },
+      "exclusions": { "any": [] },
+      "required_documents": ["aadhaar"],
+      "apply_url": "https://pmjdy.gov.in",
+      "apply_offline": {
+        "en": "Any bank branch or Bank Mitra business correspondent. Aadhaar alone is enough to open it.",
+        "hi": "किसी भी बैंक शाखा या बैंक मित्र के पास। खाता खोलने के लिए अकेला आधार पर्याप्त है।"
+      },
+      "processing_days": 3,
+      "form_id": "jan_dhan_form"
+    }
+  ]
+}

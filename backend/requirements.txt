@@ -1,0 +1,17 @@
+# --- API ---
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+python-multipart==0.0.20
+pydantic==2.10.4
+
+# --- persistence ---
+SQLAlchemy==2.0.36
+
+# --- document handling ---
+pillow==11.1.0
+pypdf==5.1.0
+pdfplumber==0.11.5
+reportlab==4.2.5
+
+# --- OCR (self-contained ONNX engine, no system binary required) ---
+rapidocr-onnxruntime==1.4.4

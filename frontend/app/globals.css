@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+  Type is large and contrast is high by default. The audience for this app
+  includes people reading on a cracked phone screen in daylight, and people who
+  read slowly. Nothing here is smaller than 15px.
+*/
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: theme("colors.sand.DEFAULT");
+  color: theme("colors.ink.DEFAULT");
+  font-family: "Segoe UI", system-ui, -apple-system, "Noto Sans", "Nirmala UI", sans-serif;
+  font-size: 17px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Touch targets stay comfortably above the 44px accessibility floor. */
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-5 min-h-[56px]
+           text-lg font-semibold transition-colors select-none;
+  }
+  .btn-primary {
+    @apply btn bg-indigo-deep text-white hover:bg-indigo-mid
+           active:translate-y-px disabled:opacity-40 disabled:pointer-events-none;
+  }
+  .btn-secondary {
+    @apply btn bg-white text-ink border-2 border-sand-line hover:border-indigo-mid
+           active:translate-y-px disabled:opacity-40 disabled:pointer-events-none;
+  }
+  .btn-quiet {
+    @apply inline-flex items-center gap-2 rounded-lg px-3 py-2 min-h-[44px]
+           text-base font-medium text-ink-soft hover:bg-sand-deep transition-colors;
+  }
+  .card {
+    @apply bg-white rounded-2xl border border-sand-line shadow-card;
+  }
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-semibold;
+  }
+  .field-label {
+    @apply text-sm font-semibold uppercase tracking-wide text-ink-faint;
+  }
+  .input {
+    @apply w-full rounded-xl border-2 border-sand-line bg-white px-4 min-h-[56px]
+           text-lg outline-none focus:border-indigo-mid;
+  }
+}
+
+/* Respect a reduced-motion preference; the spinner is the only animation. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
