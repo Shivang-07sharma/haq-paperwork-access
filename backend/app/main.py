@@ -29,7 +29,9 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origin_regex=CORS_ORIGIN_REGEX,
+    allow_origins=[
+        "https://haq-paperwork-access.vercel.app",
+        "http://localhost:3010",]
     allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
